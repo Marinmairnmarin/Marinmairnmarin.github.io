@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /publications/index.html
-title: Publications
+title: Data Cleaning and Exploratory Data Analysis
 ---
 
 > (†: equal contribution, ~: corresponding author)
