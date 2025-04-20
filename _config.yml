@@ -7,7 +7,7 @@ title: Recipes and Ratings🍽️ - Zhicong and Tianxin
 # Owner/author information
 owner:
   name: Zhicong and Tianxin
-  avatar: zhicong.jpg
+  avatar: food.png
   # bio: Two roads diverged in woods, I took the one less traveled by.
   email: zhicong@umich.edu
   # Social networking links are used in author-bio sidebar. Update and remove as you like.
@@ -28,17 +28,17 @@ owner:
 # Links to include in top navigation
 # For external links add external: true
 links:
-  - title: About Me
+  - title: Introduction
     url: /
-  - title: Publications
+  - title: Data Cleaning and Exploratory Data Analysis
     url: /publications/
-  - title: Awards
+  - title: Framing a Prediction Problem
     url: /awards/
-  - title: Hobbies
+  - title: Baseline Model
     url: /hobbies/
   # - title: Startups
     # url: /startups/
-  - title: Blogs
+  - title: Final Model
     url: /blogs/
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
