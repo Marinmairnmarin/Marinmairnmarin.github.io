@@ -37,7 +37,7 @@ Home cooks, nutritionists, and recipe‑platform designers should care about thi
 | Column            | Description                                                                                 |
 |-------------------|---------------------------------------------------------------------------------------------|
 | **minutes**       | Preparation time in minutes                                                                 |
-| **n_steps**       | Number of instruction steps in the recipe                                                  |
+| **n_steps**       | Number of instruction steps in the recipe                                                   |
 | **n_ingredients** | Total count of distinct ingredients used                                                    |
 | **calories**      | Total calories per serving                                                                  |
 | **total_fat**     | Percent daily‑value (PDV) of total fat per serving                                          |
@@ -46,6 +46,7 @@ Home cooks, nutritionists, and recipe‑platform designers should care about thi
 | **protein**       | PDV of protein per serving                                                                   |
 | **saturated_fat** | PDV of saturated fat per serving                                                            |
 | **carbohydrates** | PDV of total carbohydrates per serving                                                      |
-| **avg_rating**    | The recipe’s mean user rating (1–5), computed by averaging all nonzero ratings submitted    |
+| **avg_rating**    | Mean user rating (1–5), computed by averaging all nonzero ratings submitted                  |
+
 
 These are the features our model will draw upon when learning to predict **avg_rating**. By understanding how preparation complexity and nutritional makeup jointly drive popularity, we aim to build a recommender that balances taste‑appeal with health considerations.
