@@ -1,3 +1,8 @@
+---
+layout: page
+permalink: /publications/index.html
+title: Data Cleaning and Exploratory Data Analysis
+---
 ## Data Cleaning
 
 After merging the recipes and ratings tables, we performed the following steps, informed by how the data were generated:
@@ -33,7 +38,7 @@ Below is the head of the cleaned modeling table (one row per rated recipe):
 
 ![Distribution of Number of Steps](/images/distribution_steps.png)
 
-The histogram above shows that most recipes cluster between **5–15 steps**, with a peak around 7 steps and a long right tail of very complex recipes. This tells us that “number of steps” varies enough to be a potential predictor of rating—simpler recipes might correlate with higher ratings.
+The histogram above shows that most recipes cluster between **5–15 steps**, with a peak around 8 steps and a long right tail of very complex recipes. This tells us that “number of steps” varies enough to be a potential predictor of rating—simpler recipes might correlate with higher ratings.
 
 ---
 
