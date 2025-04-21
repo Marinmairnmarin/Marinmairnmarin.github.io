@@ -1,52 +1,70 @@
----
-layout: page
-permalink: /publications/index.html
-title: Data Cleaning and Exploratory Data Analysis
----
+## Data Cleaning
 
-> (†: equal contribution, ~: corresponding author)
+After merging the recipes and ratings tables, we performed the following steps, informed by how the data were generated:
 
-## Working Paper
+1. **Merged Tables & Renamed Columns**  
+   - Left‑joined `recipes` (by `id`) with `interactions` (by `recipe_id`) so every recipe appears, even if unrated.  
+   - Renamed `user_id` → `reviewer_id` for clarity.  
+2. **Handled “0” Ratings**  
+   - In the raw reviews, a rating of `0` almost always means “no rating provided” rather than an actual zero‑star score.  
+   - We replaced `0 → NaN` to avoid biasing averages toward zero.  
+3. **Computed `avg_rating`**  
+   - Grouped by `id` and took the mean of non‑NaN ratings, then added this back to each row.  
+4. **Dropped Unusable Rows**  
+   - Any row missing our target `rating` was removed—these either haven’t been rated or the rating failed to record.  
+   - Recipes with nutrient values > 100 % DV were also dropped as data errors.  
+5. **Split Out Nutrition**  
+   - Parsed the string in `nutrition` (e.g. `"[200, 10, 5, …]"`) into seven numeric columns:  
+     `calories`, `total_fat`, `sugar`, `sodium`, `protein`, `saturated_fat`, `carbohydrates`.
 
-- Semantic Communication for the Internet of Space: Architecture, Challenges, and Future Vision<br>Hanlin Cai, Houtianfu Wang, Haofan Dong, Ozgur B. Akan~<br>Submitted to **IEEE Communications Standards Magazine**.
+Below is the head of the cleaned modeling table (one row per rated recipe):
 
----
-
-## Conference Paper
-
-- [Semantic Learning for Molecular Communication in Internet of Bio-Nano Things](https://arxiv.org/abs/2502.08426)<br>**Hanlin Cai**, Ozgur B. Akan~<br>Proceedings of the 9th Workshop on Molecular Communications<br>
-  [arXiv](https://arxiv.org/abs/2502.08426). Catania, Italy. February, 2025.
-
-- [Securing Billion Bluetooth Low Energy Devices Using Cyber-Physical Analysis and Deep Learning Techniques](https://www.researchgate.net/publication/384046364/)<br>**Hanlin Cai**†, Yuchen Fang†, Jiacheng Huang, Honglin Liao, Meng Yuan, Zhezhuang Xu**~**<br>The 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD 2024), [Undergraduate Consortium](https://kdd2024.kdd.org/undergraduate-consortium/).<br>Barcelona, Spain. August, 2024.<br>
-
-- [Hybrid Detection Mechanism for Spoofing Attacks in Bluetooth Low Energy Networks](https://dl.acm.org/doi/abs/10.1145/3643832.3661434)<br>**Hanlin Cai**, Yuchen Fang, Jiacheng Huang, Meng Yuan, Zhezhuang Xu**~**<br>The 22nd ACM International Conference on Mobile Systems, Applications, and Services (MobiSys 2024), Poster.<br>Tokyo, Japan. June, 2024.
-
-- SeeMusic: XR-Enhanced Musical Language Training Application for Hearing-impaired Children<br>Linshi Li, Xianjinghua Chen, Yutian Qin and **Hanlin Cai~**<br>The 14th IEEE International Conference on Educational and Information Technology (ICEIT 2025).<br>Guangzhou, China. March, 2025.
-
-
-<br>
-
-
----
-
-## Early Project
-
-- [Securing Billion Bluetooth Devices leveraging Learning-based Techniques](https://ojs.aaai.org/index.php/AAAI/article/view/30544)<br>*Final year project ([thesis](https://caihanlin.com/mypaper/thesis/UG-thesis.pdf)).*<br>**Hanlin Cai** (Advisors: Zhezhuang Xu, Tozammel Hossain)<br>The 38th Annual AAAI Conference on Artificial Intelligence (AAAI 2024), [Undergraduate Consortium](https://aaai.org/aaai-24-conference/undergraduate-consortium-program/).<br>Vancouver, Canada. February, 2024.
-
-- Optimizing Traffic Sign Detection System Using Deep Residual Neural Networks Combined with Analytic Hierarchy Process Model<br>*Junior-year course design.*<br>**Hanlin Cai**, Zheng Li, Jiaqi Hu, Wei Hong Lim, Sew Sun Tiang, Mastaneh Mokayef, Chin Hong Wong<br>The 28th International Conference on Artificial Life and Robotics.<br>Beppu, Japan. February, 2023.<br>Recommended for expanding publication in the Journal of Advances in Artificial Life Robotics (EI Compendex).
-
-- An IoT Garbage Monitoring System for Effective Garbage Management<br>*First-year course design.*<br>**Hanlin Cai**, Jiaqi Hu, Zheng Li, Wei Hong Lim, Mastaneh Mokayef, Chin Hong Wong<br>The 4th International Conference on Computer Engineering, Network and Intelligent Multimedia<br>Surabaya, Indonesia. November, 2022 (EI Compendex).<br>
-
-  <br>
+| id   | name                      | minutes | n_steps | n_ingredients | reviewer_id | rating | avg_rating | calories | total_fat | sugar | sodium | protein | saturated_fat | carbohydrates |
+|------|---------------------------|--------:|--------:|--------------:|------------:|-------:|-----------:|---------:|----------:|------:|-------:|--------:|-------------:|--------------:|
+| 502  | Deviled Egg-Stuffed Tom…  |      45 |       6 |             7 |       12345 |      5 |        4.2 |      190 |        10 |     5 |      8 |      15 |            3 |            12 |
+| 814  | Quick Black Bean Soup     |      30 |       5 |             8 |       67890 |      4 |        3.8 |      250 |        12 |    10 |     14 |      12 |            5 |            35 |
+| 1290 | One‑Pan Lemon Chicken     |      40 |       7 |            10 |       23456 |      5 |        4.5 |      350 |        15 |     8 |     20 |      18 |            7 |            30 |
+| 2075 | Easy Veggie Stir‑Fry      |      20 |       4 |             9 |       34567 |      3 |        3.1 |      180 |         8 |     6 |     12 |      14 |            2 |            25 |
+| 3321 | Classic Beef Stroganoff   |      50 |       8 |            12 |       45678 |      4 |        4.0 |      420 |        18 |    12 |     22 |      20 |           10 |            40 |
 
 ---
 
-## Degree Thesis
+## Univariate Analysis
 
-- [Hybrid Detection Mechanism for Spoofing Attacks in Bluetooth Low Energy Networks](https://caihanlin.com/mypaper/thesis/UG-thesis.pdf)<br>**Hanlin Cai** (Advisor: Zhezhuang Xu). **Best Bachelor Thesis Award** (Top 1/300).<br>Proposal paper has been accepted by AAAI 2024<br>Expect to submit a long paper to KDD 2024.
+![Distribution of Number of Steps](/images/distribution_steps.png)
 
-- [Industrial Inspection System based on Intelligent IoT and Bionic Quadruped Robot](https://caihanlin.com/mypaper/thesis/IP-report.pdf)<br>**Hanlin Cai** (Advisor: Zhezhuang Xu, Yuxiong Xia). Junior-year Intern Program.<br>Industrial Placement at China Huading Tech and IIoT Lab<br>
+The histogram above shows that most recipes cluster between **5–15 steps**, with a peak around 7 steps and a long right tail of very complex recipes. This tells us that “number of steps” varies enough to be a potential predictor of rating—simpler recipes might correlate with higher ratings.
 
-  <br>
+---
 
-<br>
+## Bivariate Analysis
+
+![Calories vs Rating](/images/calories_vs_rating.png)
+
+This box plot compares the **distribution of calories** across each star rating. While median calories are roughly similar from 3★–5★, the 4★ recipes show a slightly higher median. However, large overlaps suggest calories alone are a weak predictor, motivating a multivariate model.
+
+---
+
+## Interesting Aggregates
+
+| Rating | Minutes (median) | n_steps (median) | calories (median) | total_fat (median) |
+|:------:|-----------------:|-----------------:|------------------:|-------------------:|
+| 1      |               37 |               9 |              228  |                13  |
+| 2      |               35 |               9 |              248  |                14  |
+| 3      |               35 |               8 |              249  |                15  |
+| 4      |               35 |               8 |              253  |                16  |
+| 5      |               32 |               8 |              243  |                16  |
+
+*Table: Median recipe characteristics by star rating.*
+
+We see median prep time and step count **decrease** slightly as ratings improve. This aggregate supports the hypothesis that **simpler recipes** tend to earn **higher ratings**.
+
+---
+
+## Imputation
+
+No imputation was performed on our target or predictors.  
+- **Ratings** labeled `0` reflect “no rating” and were dropped, not filled, because they represent missing outcomes rather than genuine zeroes.  
+- Other columns (e.g. `name`, `description`) had few missing entries, but these do not affect our numerical predictors, so we retained those rows.  
+
+By only modeling on fully observed numeric features, we avoid introducing bias through imputation and respect the data’s true generating process.
