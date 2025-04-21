@@ -3,27 +3,33 @@ layout: page
 permalink: /awards/index.html
 title: Framing a Prediction Problem
 ---
+## Step 3: Framing a Prediction Problem
 
-> Update: 20th Sep 2024
+### Prediction Task  
+- **Type**: Regression  
+- **Goal**: Predict a recipe’s **average user rating** on a 1–5 scale from its metadata and nutrition.
 
-## Scholarships
+### Response Variable  
+- **`avg_rating`** (continuous)  
+- **Why**: We want fine‑grained predictions of user satisfaction rather than broad buckets, and `avg_rating` captures the mean of all non‑zero user ratings.
 
-- June 2024：**KDD-24 Undergraduate Scholarship** ($1000)<br>Only 21 undergraduates are selected around the world
-- Dec 2023：**AAAI-24 Undergraduate Scholarship** ($5000)<br>Only 18 undergraduates are selected around the world
-- Aug 2023：Innovation Scholarship ($1400)<br>One of the highest undergraduate awards at FZU
-- May 2023：XiamenAir Scholarship ($600)<br>
-- June 2024：Best Final Year Project Award of Maynooth (€500)
-- Oct 2023：Best Academic Performance of Maynooth (€100)
-- Oct 2022：Best Course Project Award of Maynooth (€100)
-- First Prize Scholarship of MIEC ($2100, **Four times**)<br>Combined degree scholarship between FZU and Maynooth<br>
+### Features Known at Prediction Time  
+All predictors are available as soon as a recipe is published—no future “leaked” data:  
+- **Complexity**  
+  - `minutes` (prep time)  
+  - `n_steps` (number of preparation steps)  
+  - `n_ingredients` (ingredient count)  
+- **Nutrition**  
+  - `calories`  
+  - `total_fat`, `sugar`, `sodium`, `protein`, `saturated_fat`, `carbohydrates`  
 
-## Competitions
+### Evaluation Metric  
+- **Primary**: Root‑Mean‑Squared Error (RMSE)  
+  - RMSE is in the same units as ratings (stars) and penalizes large errors more heavily, helping avoid egregious misestimates.  
+- **Secondary**: R² score  
+  - Reports the fraction of variance in `avg_rating` explained by our model.
 
-- Jan 2024：Finalist of China International College Students’ Innovation Competition (Top 3%)
-- Aug 2023：Best Technology Award in National Youth Science Innovation Project Competition (Top 1%)
-- Aug 2023：Second Prize in National Collegiate Internet of Things Technology and Application Competition (Top 5%)
-- May 2023：Finalist Award in Mathematical Contest In Modeling (Top 1% of all 20508 paper)
-- Nov 2022：First Prize (Provincial Level) in China Undergraduate Mathematical Contest in Modeling (Top 8%)
-- June 2022：**Championship** of 100-meter Freestyle Swimming Competition of Fuzhou University<br>
+---
 
-<br>
+> **Note on Alternatives**  
+> If we instead framed this as a **binary classification** (e.g. Low Rating ≤ 3 stars vs. High Rating ≥ 4 stars), we would choose **F₁‑score** as our primary metric—because ratings are heavily skewed toward the high end, F₁ balances precision and recall on the minority class.
