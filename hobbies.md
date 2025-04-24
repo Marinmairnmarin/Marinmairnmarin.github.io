@@ -11,13 +11,16 @@ The baseline model is a **`DecisionTreeClassifier`** from *scikit-learn*.
 A decision tree offers a fast, easily interpretable starting point for classification.
 
 ## Features Used
-| Feature          | Type          | Notes                                                |
-|------------------|--------------|------------------------------------------------------|
-| `minutes`        | Quantitative | Total cooking time                                   |
-| `sugar`          | Quantitative | Grams of sugar (per-serving daily-value %)           |
-| `sodium`         | Quantitative | Milligrams of sodium (per-serving daily-value %)     |
-| `calories`       | Quantitative | Calories (per-serving)                               |
-| `is_healthy`     | Nominal      | Boolean flag from health-related recipe tags         |
+
+| Feature      | Type        | Notes                                          |
+|--------------|-------------|-----------------------------------------------|
+| `minutes`    | Quantitative| Total cooking time                             |
+| `sugar`      | Quantitative| Grams of sugar (daily-value %)                |
+| `sodium`     | Quantitative| Milligrams of sodium (daily-value %)          |
+| `calories`   | Quantitative| Calories per serving                           |
+| `is_healthy` | Nominal     | Boolean flag from health-related recipe tags   |
+{: .table .table-striped }  <!-- 👈 theme-friendly classes -->
+
 
 *No ordinal features* were included in this baseline.
 
