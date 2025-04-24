@@ -7,7 +7,9 @@ title: Final Model
 ## Step 5 · Final Model & Improvements
 
 ### 1 · Feature Representation  
-(unchanged – same quantile→normal transforms, standardisation, Boolean→0/1 casting)  
+ - unchanged – same quantile → normal transforms
+ - standardisation
+ - Boolean → 0/1 casting  
 
 | Column group | Engineering rationale |
 |--------------|-----------------------|
