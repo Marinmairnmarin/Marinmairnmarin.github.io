@@ -5,22 +5,20 @@ title: Data Cleaning and Exploratory Data Analysis
 ---
 ## Data Cleaning
 
-After merging the recipes and ratings tables, we performed the following steps, informed by how the data were generated:
+## 1  Data Cleaning (*tied to the data-generating process*)
 
-1. **Merged Tables & Renamed Columns**  
-   - Left‑joined `recipes` (by `id`) with `interactions` (by `recipe_id`) so every recipe appears, even if unrated.  
-   - Renamed `user_id` → `reviewer_id` for clarity.  
-2. **Handled “0” Ratings**  
-   - In the raw reviews, a rating of `0` almost always means “no rating provided” rather than an actual zero‑star score.  
-   - We replaced `0 → NaN` to avoid biasing averages toward zero.  
-3. **Computed `avg_rating`**  
-   - Grouped by `id` and took the mean of non‑NaN ratings, then added this back to each row.  
-4. **Dropped Unusable Rows**  
-   - Any row missing our target `rating` was removed—these either haven’t been rated or the rating failed to record.  
-   - Recipes with nutrient values > 100 % DV were also dropped as data errors.  
-5. **Split Out Nutrition**  
-   - Parsed the string in `nutrition` (e.g. `"[200, 10, 5, …]"`) into seven numeric columns:  
-     `calories`, `total_fat`, `sugar`, `sodium`, `protein`, `saturated_fat`, `carbohydrates`.
+| Step | What we did | Why (link to raw-data quirks) |
+|:--|:--|:--|
+| **1. Merge tables** | `recipes` ⊲⊳ `ratings` on id (left-join) | Every posted recipe should appear even if no-one has rated it yet. |
+| **2. Rename columns** | `user_id → reviewer_id` | Clarifies that the ID belongs to the reviewer, not the recipe author. |
+| **3. Treat “0” ratings as missing** | `0 → NaN` | In Food.com’s UI a blank star is stored as 0, but it is **not** a real zero-star review. Keeping it would under-state true ratings. |
+| **4. Add `avg_rating`** | Mean of non-NaN ratings per recipe | Gives one outcome number per recipe for modelling. |
+| **5. Drop rows with missing ratings** | `rating`, `avg_rating`, `reviewer_id` must be present | Rows with no outcome cannot train or test a predictive model. |
+| **6. Filter to recipes with > 3 ratings** | `groupby(id).filter(count>3)` | Averages based on 1-2 votes are too noisy to trust. |
+| **7. Expand `nutrition` string → seven numeric columns** | `['calories', 'total_fat', …]` | Each element is %DV, needed individually for health analysis. |
+| **8. Remove implausible nutrition rows** | Keep rows where every %DV ≤ 150 | Values far past 100 %DV are likely scraped/entry errors (e.g., “30 000 % sugar”). |
+| **9. Add `is_healthy` flag from `tags`** | `tags` containing *healthy*, *healthy-2*, *high-in-something-diabetic-friendly* → `True` | Tags are author-entered meta-data; they summarise overall healthiness better than single nutrients. |
+
 
 Below is the head of the cleaned modeling table (one row per rated recipe):
 
