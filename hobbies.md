@@ -37,6 +37,7 @@ Resulting dataset: **≈ 13 878 recipes**.
 - **Train / test split:** `train_test_split` with a fixed random seed (42).
 
 ## Performance
+
 | Metric (test set) | Value |
 |-------------------|-------|
 | **F1 score**      | **0.836** |
