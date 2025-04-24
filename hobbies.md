@@ -1,8 +1,7 @@
 ---
 layout: page
-title: Baseline Model
 permalink: /hobbies/index.html
-css: "/assets/css/custom.css"
+title: Baseline Model
 ---
 
 # Baseline Model for High-Rating Recipe Prediction
@@ -20,7 +19,6 @@ A decision tree offers a fast, easily interpretable starting point for classific
 | `calories`       | Quantitative | Calories (per-serving)                               |
 | `is_healthy`     | Nominal      | Boolean flag from health-related recipe tags         |
 
-*No ordinal features* were included in this baseline.
 
 ## Feature Processing
 - **Quantitative** features were used *as-is* (no scaling needed for trees).  
