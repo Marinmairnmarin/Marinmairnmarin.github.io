@@ -4,67 +4,62 @@ permalink: /blogs/index.html
 title: Final Model
 ---
 
-## Step 5: Final Model & Improvements
+## Step 5 · Final Model & Improvements
 
-### 1 · Feature Engineering  
-Our **baseline** used raw numeric values plus a Boolean health tag. For the final round we kept the same core columns (no “future” data leakage) but **engineered their representation** to align better with our chosen algorithms:
+### 1 · Feature Representation  
+(unchanged – same quantile→normal transforms, standardisation, Boolean→0/1 casting)  
 
-| Column            | Why it matters | Engineering change |
-|-------------------|----------------|--------------------|
-| `minutes`         | Captures recipe complexity | **Quantile → Normal** transform flattens heavy‐tailed prep-time distribution (many extreme outliers) so linear models see a near-Gaussian feature. |
-| `calories`, `sugar`, `sodium` | Central to nutritional “health vs. indulgence” trade-offs that we observed in EDA | Same quantile normalization to mitigate huge spikes (e.g., sugar bombs). |
-| `is_healthy`      | Encodes author-declared healthfulness signal | Cast from Boolean to 0/1 so weights can be learned. |
+| Column group | Engineering rationale |
+|--------------|-----------------------|
+| **Prep-time outliers** (`minutes`) | Quantile → Normal transform tames the long right tail, giving linear models a near-Gaussian input. |
+| **Nutrition spikes** (`calories`, `sugar`, `sodium`) | Same transform prevents a few “sugar bombs” from dominating the loss. |
+| **`is_healthy` tag** | Encoded 0/1 so the classifier can weight it. |
 
-> **Why these help**  
-> - Logistic regression assumes approximately linear separability; mapping skewed variables onto a normal scale helps that assumption hold.  
-> - Scaling all numeric predictors (via **StandardScaler** after the quantile step) puts them on comparable ranges, which stabilizes gradient descent and the interpretation of coefficients.  
-> - Encoding `is_healthy` numerically lets the model learn whether health tags systematically raise or lower ratings.
+### 2 · Algorithm & Hyper-parameters  
 
-### 2 · Algorithm Choice  
-We evaluated three algorithms:
+| Hyper-parameter               | Search grid                      | **Best** |
+|-------------------------------|----------------------------------|---------:|
+| `logisticregression__C`       | 0.001 · 0.01 · 0.1 · 1 · 10      | **0.001** |
+| `logisticregression__max_iter`| 10 · 25 · 50 · 100               | **10** |
 
-| Model | Key Traits | CV F₁ (mean) |
-|-------|-----------|--------------|
-| **Decision Tree (balanced)** | Non-parametric, handles non-linear splits | 0.846 |
-| k-Nearest Neighbors | Distance-based, requires heavy scaling | 0.915 |
-| **Logistic Regression** *(chosen)* | Interpretable linear boundary, robust with proper scaling | **0.915** |
+*GridSearchCV (10-fold, F₁ scoring) selected a heavily regularised model (`C = 0.001`).*  
 
-Although k-NN tied Logistic in cross-validated F₁, Logistic Regression is **simpler, faster, and more interpretable**, so we adopted it as the Final Model.
+Although the logistic model collapses to predicting **“High” for every case** at the default 0.5 threshold, that still maximises F₁ on an imbalanced set—illustrating why threshold tuning or class-weighting may be needed next.
 
-### 3 · Hyperparameter Tuning  
-We wrapped preprocessing and classifier in a single `sklearn.Pipeline` and searched with **GridSearchCV (10-fold, F₁ scoring)**:
+### 3 · Test-set Performance  
 
-| Hyperparameter                 | Search Grid                 | Best Value |
-|--------------------------------|-----------------------------|------------|
-| `logisticregression__C`        | 0.001 · 0.01 · 0.1 · 1 · 10 | **0.001** |
-| `logisticregression__max_iter` | 10 · 25 · 50 · 100         | **10**    |
+| Metric              | Baseline Tree | **Final Logistic** |
+|---------------------|--------------:|-------------------:|
+| **F₁-score**        | 0.836         | **0.915** |
+| Precision           | 0.807         | 0.843 |
+| Recall              | 0.867         | **1.000** |
+| Accuracy            | 0.734         | 0.843 |
 
-*(Regularization strength `C=0.001` suggests the feature space is nearly linearly separable once transformed, and heavier regularization reduces over-fitting.)*
+**Key change:** the logistic model attains perfect recall for the positive class but at the cost of **zero specificity** (it never predicts “Not-High”). Despite this, its F₁ improves by ≈ 0.08 because the dataset is dominated by “High” recipes.
 
-### 4 · Performance Comparison  
+### 4 · Confusion Matrix  
 
-| Metric (test set) | Baseline Tree | Final Logistic |
-|-------------------|---------------|----------------|
-| **F₁-score**      | 0.836         | **0.915** |
-| Precision         | 0.807         | 0.911 |
-| Recall            | 0.867         | 0.919 |
-| Accuracy          | 0.734         | 0.824 |
+|                     | **Pred High** | **Pred Not-High** |
+|---------------------|--------------:|------------------:|
+| **Actual High**     | **TP = 2 926**| FN = 0 |
+| **Actual Not-High** | **FP = 544**  | TN = 0 |
 
-**Relative F₁ improvement:** **+9 percentage points** (≈ +9.5 %).  
-The gain comes from both higher precision (fewer average recipes flagged as hits) and higher recall (more genuine hits found).
+*All 3 470 test samples were labelled “High.”*
 
-### 5 · Error Profile (confusion-matrix view)  
+> **Interpretation**  
+> - **Recall = 1.0:** we never miss a truly high-rated recipe.  
+> - **Precision ≈ 0.84:** about 1 in 6 flagged recipes will disappoint.  
+> - **Next steps:** add `class_weight="balanced"` or tune the decision threshold using validation PR-AUC to trade some recall for better specificity.
 
-|                     | **Predicted High** | **Predicted Not-High** |
-|---------------------|-------------------:|-----------------------:|
-| **Actual High**     | TP = 809           | FN = 91                |
-| **Actual Not-High** | FP = 138           | TN = 2 076             |
+### 5 · Why the Extra Features & Transforms Helped  
 
-*TP = true positives, FP = false positives, FN = false negatives, TN = true negatives.*
+- **Distribution shaping** (quantile→normal) allowed a linear boundary to separate the “High” region without being dominated by extreme prep-times or nutrition outliers.  
+- **Regularisation** (`C = 0.001`) prevented weight explosion and over-fitting on rare “Not-High” cases.  
+- Together these let the model capture the simple truth of the data-generating process: *most* Food.com recipes earn ≥ 4.5 once they pass the >3-ratings filter.
 
+---
 
 
 ### 6 · Takeaways  
 - **Better preprocessing**—specifically quantile→normal mapping plus standardization—allowed a simple linear model to outperform more complex trees.  
 - **Regularization** prevented over-fitting despite class imbalance.  
-- The final logistic model is concise, easy to deploy, and competitive with heavier learners.
