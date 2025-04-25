@@ -2,12 +2,6 @@
 layout: page
 ---
 
-# About Us
-
-Here are **Zhicong and Tianxin**.<br>
-email: zhicong@umich.edu & ltianxin@umich.edu
----
-
 ## Recipes and Ratings
 
 This project uses the **Recipes and Ratings** dataset from Food.com, originally scraped for a recommender‑systems study. We focus on how recipe characteristics (prep time, nutritional content, complexity) relate to average user ratings.
