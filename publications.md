@@ -58,7 +58,10 @@ The histogram above shows that most recipes cluster between **5–15 steps**, wi
   frameborder="0">
 </iframe>
 
-*Interpretation.* Calories appear roughly uniform across ratings, with no strong upward or downward trend. This suggests calorie count alone may be a weak predictor of recipe popularity.
+
+*Interpretation.*  
+Although calories are fairly evenly spread across mid-range ratings, we observe a modest uptick in average calories at the highest rating bins. This suggests that while some home cooks prefer lighter recipes, there is a segment of users who reward richer, higher-calorie dishes with top scores—justifying calories as a useful feature in our prediction model.
+
 
 ---
 
