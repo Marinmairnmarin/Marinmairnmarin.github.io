@@ -15,7 +15,7 @@ This project uses the **Recipes and Ratings** dataset from Food.com, originally 
 ## Introduction
 We’re working with the Food.com Recipes & Ratings dataset, which combines two tables of user‑submitted recipes and their corresponding reviews since 2008. Our project centers on a single, focused question:
 
-> **Can we predict a recipe’s average user rating using only its culinary complexity (prep time, number of steps, number of ingredients) and its nutritional profile (calories, fat, sugar, sodium, protein, saturated fat, carbohydrates)?**
+> **Can we predict a recipe’s average user rating using only its culinary complexity and its nutritional profile?**
 
 Home cooks, nutritionists, and recipe‑platform designers should care about this question because accurate rating predictions can:
 - **Help users discover** recipes they’re more likely to enjoy  
