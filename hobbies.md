@@ -21,7 +21,8 @@ A decision tree offers a fast, easily interpretable starting point for classific
 
 ## Feature Processing
 - **Quantitative** features were used *as-is* (no scaling needed for trees).  
-- **Nominal** feature `is_healthy` was already Boolean (0/1), so no encoding step was required.  
+- **Nominal** feature `is_healthy` was already Boolean (0/1), so no encoding step was required.
+  > _Note_: Decision trees split on raw values and do not require one-hot or label encoding. Other models (e.g., Logistic Regression, KNN) do require encoding of categorical inputs.  
 - All preprocessing and model fitting were wrapped in a single `sklearn.Pipeline`.
 
 ## Data Cleaning & Filtering
