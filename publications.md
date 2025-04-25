@@ -67,17 +67,14 @@ Although calories are fairly evenly spread across mid-range ratings, we observe 
 
 ## Interesting Aggregates
 
-| Rating | Minutes (median) | n_steps (median) | calories (median) | total_fat (median) |
-|:------:|-----------------:|-----------------:|------------------:|-------------------:|
-| 1      |               37 |               9 |              228  |                13  |
-| 2      |               35 |               9 |              248  |                14  |
-| 3      |               35 |               8 |              249  |                15  |
-| 4      |               35 |               8 |              253  |                16  |
-| 5      |               32 |               8 |              243  |                16  |
+### Mean & Median of Key Metrics by Rating Bin
 
-*Table: Median recipe characteristics by star rating.*
+<iframe src="{{ '/assets/mean_by_rating.html' | relative_url }}" width="100%" height="300" frameborder="0"></iframe>
+<iframe src="{{ '/assets/median_by_rating.html' | relative_url }}" width="100%" height="300" frameborder="0"></iframe>
 
-We see median prep time and step count **decrease** slightly as ratings improve. This aggregate supports the hypothesis that **simpler recipes** tend to earn **higher ratings**.
+*Significance of Outliers & Next Steps:*  
+You’ll notice **many large outliers** in `minutes`, `calories`, `sugar`, `sodium`, and `saturated_fat`. These extreme values—e.g. recipes claiming thousands of percent daily value—signal entry or scraping errors. To handle them before modeling, we apply transformers like **QuantileTransformer** to compress tails and ensure models aren’t dominated by a few extreme recipes. This outlier-driven decision also guides our feature‐selection: we keep metrics that show reliable variation without excessive noise.
+
 
 ---
 
