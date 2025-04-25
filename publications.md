@@ -49,9 +49,16 @@ The histogram above shows that most recipes cluster between **5–15 steps**, wi
 
 ## Bivariate Analysis
 
-![Calories vs Rating](/images/calories_vs_rating.png)
+### Calories vs Average Rating
 
-This box plot compares the **distribution of calories** across each star rating. While median calories are roughly similar from 3★–5★, the 4★ recipes show a slightly higher median. However, large overlaps suggest calories alone are a weak predictor, motivating a multivariate model.
+<iframe
+  src="{{ '/assets/calories_vs_rating.html' | relative_url }}"
+  width="100%"
+  height="600"
+  frameborder="0">
+</iframe>
+
+*Interpretation.* Calories appear roughly uniform across ratings, with no strong upward or downward trend. This suggests calorie count alone may be a weak predictor of recipe popularity.
 
 ---
 
