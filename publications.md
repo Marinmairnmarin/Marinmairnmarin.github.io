@@ -34,9 +34,15 @@ Below is the head of the cleaned modeling table (one row per rated recipe):
 
 ## Univariate Analysis
 
-![Distribution of Number of Steps](/images/distribution_steps.png)
+<iframe
+  src="assets/n_steps_hist.html"
+  width="800"
+  height="600"
+  frameborder="0">
+</iframe>
 
 The histogram above shows that most recipes cluster between **5–15 steps**, with a peak around 8 steps and a long right tail of very complex recipes. This tells us that “number of steps” varies enough to be a potential predictor of rating—simpler recipes might correlate with higher ratings.
+
 
 ---
 
