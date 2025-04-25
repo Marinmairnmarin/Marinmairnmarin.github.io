@@ -5,8 +5,7 @@ layout: page
 # About Us
 
 Here are **Zhicong and Tianxin**.<br>
-  - email: zhicong@umich.edu
-  - email: ltianxin@umich.edu
+email: zhicong@umich.edu & ltianxin@umich.edu
 ---
 
 ## Recipes and Ratings
