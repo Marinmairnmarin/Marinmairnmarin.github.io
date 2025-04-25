@@ -21,8 +21,8 @@ title: Final Model
 
 | Hyper-parameter               | Search grid                      | **Best** |
 |-------------------------------|----------------------------------|---------:|
-| `logisticregression__C`       | 0.001 · 0.01 · 0.1 · 1 · 10      | **0.001** |
-| `logisticregression__max_iter`| 10 · 25 · 50 · 100               | **10** |
+| `logisticregression__C`       |  0.001 · 0.01 · 0.1 · 1 · 10      | **0.001** |
+| `logisticregression__max_iter`|  10 · 25 · 50 · 100               | **10** |
 
 *GridSearchCV (10-fold, F₁ scoring) selected a heavily regularised model (`C = 0.001`).*  
 
@@ -41,7 +41,7 @@ Although the logistic model collapses to predicting **“High” for every case*
 
 ### 4 · Confusion Matrix  
 
-|                     | **Pred High** | **Pred Not-High** |
+|                     | **Pred High** |  **Pred Not-High** |
 |---------------------|--------------:|------------------:|
 | **Actual High**     | **TP = 2 926**| FN = 0 |
 | **Actual Not-High** | **FP = 544**  | TN = 0 |
