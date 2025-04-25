@@ -35,7 +35,7 @@ Below is the head of the cleaned modeling table (one row per rated recipe):
 ## Univariate Analysis
 
 <iframe
-  src="assets/n_steps_hist.html"
+  src="n_steps_hist.html"
   width="800"
   height="600"
   frameborder="0">
