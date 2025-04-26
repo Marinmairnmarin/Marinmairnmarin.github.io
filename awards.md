@@ -34,7 +34,6 @@ We began with the full suite of complexity and nutrition metrics but pared down 
 - **Primary metric:** **F₁-score**
   - **Class imbalance:** Only ~20 % of recipes cross the 4.5-star line; accuracy would be inflated by the majority class.  
   - **Balanced error cost:** We care about both *precision* (avoid over-hyping average dishes) and *recall* (don’t miss hidden gems). F₁ is the harmonic mean of the two and captures that trade-off.  
-- **Secondary metrics:** Recall and precision are also dicussed respectively for the final model for more comprehensive interpretation.
 
 ### Time-of-Prediction Justification  
 All chosen features exist the moment a recipe is published: preparation time, nutrition breakdown, and author-assigned tags. Excluding any data that arrives later ensures the prediction is feasible in real time and avoids future information leakage.  

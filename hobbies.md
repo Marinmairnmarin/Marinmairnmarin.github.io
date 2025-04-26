@@ -25,7 +25,7 @@ A decision tree offers a fast, easily interpretable starting point for classific
 
 | Metric (test set) | Value |
 |-------------------|-------|
-| **F1 score**      | **0.836** |
+| **F1 score**      | **0.848** |
 
 The F1 score balances precision and recall and indicates strong baseline performance given the small feature set.
 
