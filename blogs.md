@@ -9,9 +9,9 @@ By experimenting with different prediction models, adjusting preprocessing metho
 
 
 ### 1 · Feature Engineered  
- - **Quantile-transformed feature**: 'minutes', 'calories', 'sugar', 'sodium', since we found their distributions are left-skewed with many large outliers.
+ - **Quantile-transformed feature**: 'minutes', 'calories', 'sugar', 'sodium', since we found their distributions are left-skewed with many large outliers at the exploration state.
  - **Standardized-transformed feature**: 'minutes', 'calories', 'sugar', 'sodium', all numeric features are standardized to make sure they are weighted in the same scale.
- - **Binary Encoding**: 'is_healthy' is encoded into 0/1
+ - **Binary Encoding**: 'is_healthy' is encoded into 0/1 for the model to weight.
 
 
 ### 2 · Algorithm & Hyper-parameters  
@@ -43,5 +43,5 @@ By experimenting with different prediction models, adjusting preprocessing metho
 
 
 ### 6 · Takeaways  
-- **Better preprocessing**—specifically quantile→normal mapping plus standardization—allowed a simple linear model to outperform more complex trees.  
-- **Regularization** prevented over-fitting despite class imbalance.  
+- With such high F1 score, we believe complexity and nutritional health information could be used to predict whether a recipe would get high or low overall ratings.
+- In terms of building models, better preprocessing with transformers and regularization that precents over-fitting despite class imbalance improved our model greatly.

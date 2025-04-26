@@ -31,7 +31,7 @@ We began with the full suite of complexity and nutrition metrics but pared down 
   - `is_healthy` (Boolean derived from health-related tags)
 
 ### Evaluation Metric  
-- **Primary metric:** **F₁-score**
+**F₁-score**
   - **Class imbalance:** Only ~20 % of recipes cross the 4.5-star line; accuracy would be inflated by the majority class.  
   - **Balanced error cost:** We care about both *precision* (avoid over-hyping average dishes) and *recall* (don’t miss hidden gems). F₁ is the harmonic mean of the two and captures that trade-off.  
 
