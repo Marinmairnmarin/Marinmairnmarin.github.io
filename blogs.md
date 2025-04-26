@@ -15,6 +15,7 @@ By experimenting with different prediction models, adjusting preprocessing metho
 
 
 ### 2 · Algorithm & Hyper-parameters  
+Since different C represents different level of tolerence of model's complexity, and the optimal max_iter makes sure the model can converge, Adjusting these two parameters can make the logistic regression model achieve better results under different data characteristics and scales.
 
 | Hyper-parameter               | Search grid                      | **Best** |
 |-------------------------------|----------------------------------|---------:|
