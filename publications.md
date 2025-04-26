@@ -26,6 +26,7 @@ We found nan value in 2 categories:
 | **5. Remove implausible nutrition rows** | Values far past 100 %DV are likely scraped/entry errors (e.g., “30 000 % sugar”), so only values ≤ 150 are kept. |
 | **6. Add `is_healthy` flag from `tags`** | We marked `tags` containing *healthy*, *healthy-2*, *high-in-something-diabetic-friendly* true for a new column `is_healthy`, since tags are author-entered meta-data whcih summaize the overall healthiness better than single nutrients ('tags' is dropped after extraction). |
 
+
 (Note: Although there are tags like low-saturated-fat, they only reflect one aspect of nutrition. Since we cannot guarantee the overall healthiness of the recipe based on such tags alone, we only selected tags that more clearly indicate a healthy recipe as a whole.)
 
 
@@ -70,7 +71,6 @@ The histogram above shows that most recipes cluster between **5–15 steps**, wi
   frameborder="0">
 </iframe>
 
-
 **Interpretation**
 The ratings distribution for low-calorie and medium-calorie recipes isrelatively balanced, as they appear across the entire rating spectrum. However, we observed a modest uptick in average calories at the highest rating bins. This might suggests that there is a segment of users who reward richer, higher-calorie dishes with top scores—justifying calories as a useful feature in our prediction model.
 
@@ -92,8 +92,17 @@ The ratings distribution for low-calorie and medium-calorie recipes isrelatively
 | 5          | 60.64   | 9.56    | 8.81           | 303.72   | 32.86 | 20.05  | 27.78          |
 
 
-<iframe src="{{ '/assets/mean_by_rating.html' | relative_url }}" width="100%" height="300" frameborder="0"></iframe>
-<iframe src="{{ '/assets/median_by_rating.html' | relative_url }}" width="100%" height="300" frameborder="0"></iframe>
+**Median**
+
+
+| rating_bin | minutes | n_steps | n_ingredients | calories | sugar | sodium | saturated_fat |
+|------------|---------|---------|----------------|----------|-------|--------|----------------|
+| 1          | 20.0    | 7.5     | 7.0            | 249.30   | 59.0  | 8.0    | 21.5           |
+| 2          | 34.0    | 7.5     | 8.0            | 218.40   | 16.0  | 12.5   | 16.0           |
+| 3          | 40.0    | 9.0     | 9.0            | 278.40   | 18.0  | 12.0   | 17.0           |
+| 4          | 35.0    | 8.0     | 9.0            | 267.40   | 18.0  | 14.0   | 18.0           |
+| 5          | 30.0    | 8.0     | 8.0            | 253.65   | 19.0  | 13.0   | 18.0           |
+
 
 **Significance:**
 - The mean and median distribution indicate there are **many large outliers** in `minutes`, `calories`, `sugar`, `sodium`, and `saturated_fat`, which suggests that we should probably apply some feature engineering on them if we want to use for prediction.
