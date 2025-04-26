@@ -19,15 +19,14 @@ We found nan value in 2 categories:
 
 | Step | Why |
 |:--|:--|:--|
-| **1. Drop Nan** | rating-related nan rows are dropped (reason discussion above). |
+| **1. Drop Nan** | rating-related nan rows are dropped (reason discussed above). |
 | **2. Filter to recipes with > 3 ratings** | 'avg_rating' is used as as a summary of each recipe’s overall rating. Averages based on 1-2 votes are too noisy to trust. |
-| **3. Extract Interested Columns** | 'avg_rating' represents recipes' overally ratings, 'minutes', 'n_steps',  and 'n_ingredients' represent complexity,'nutrition' and 'tags' bring nutritional health information.
+| **3. Extract Interested Columns** | 'avg_rating' represents recipes' overally ratings, 'minutes', 'n_steps',  and 'n_ingredients' represent complexity,'nutrition' and 'tags' bring nutritional health information. They contain all the information we are interested to investigate.
 | **4. Extract nutrition components from `nutrition`** | 'nutrition' column is in the form of a string to mimic a list. We toke the nutition components out and converted to numeric data for health analysis ('nutrition' is dropped after extraction). |
 | **5. Remove implausible nutrition rows** | Values far past 100 %DV are likely scraped/entry errors (e.g., “30 000 % sugar”), so only values ≤ 150 are kept. |
 | **6. Add `is_healthy` flag from `tags`** | We marked `tags` containing *healthy*, *healthy-2*, *high-in-something-diabetic-friendly* true for a new column `is_healthy`, since tags are author-entered meta-data whcih summaize the overall healthiness better than single nutrients ('tags' is dropped after extraction). |
 
 (Note: Although there are tags like low-saturated-fat, they only reflect one aspect of nutrition. Since we cannot guarantee the overall healthiness of the recipe based on such tags alone, we only selected tags that more clearly indicate a healthy recipe as a whole.)
-
 
 After the data cleaning, there are 13878 rows left.
 
@@ -52,6 +51,7 @@ Below is the head of the cleaned modeling table (one row per rated recipe):
   height="600"
   frameborder="0">
 </iframe>
+**Interpretation**
 The histogram above shows that most recipes cluster between **5–15 steps**, with a peak around 8 steps and a long right tail of very complex recipes. This tells us that “number of steps” varies enough to be a potential predictor of rating—simpler recipes might correlate with higher ratings.
 
 
@@ -69,8 +69,8 @@ The histogram above shows that most recipes cluster between **5–15 steps**, wi
 </iframe>
 
 
-*Interpretation.*  
-Although calories are fairly evenly spread across mid-range ratings, we observe a modest uptick in average calories at the highest rating bins. This suggests that while some home cooks prefer lighter recipes, there is a segment of users who reward richer, higher-calorie dishes with top scores—justifying calories as a useful feature in our prediction model.
+**Interpretation**
+The ratings distribution for low-calorie and medium-calorie recipes isrelatively balanced, as they appear across the entire rating spectrum. However, we observed a modest uptick in average calories at the highest rating bins. This might suggests that there is a segment of users who reward richer, higher-calorie dishes with top scores—justifying calories as a useful feature in our prediction model.
 
 
 ---
@@ -79,11 +79,22 @@ Although calories are fairly evenly spread across mid-range ratings, we observe 
 
 ### Mean & Median of Key Metrics by Rating Bin
 
+**Mean*
+| rating_bin | minutes | n_steps | n_ingredients | calories | sugar | sodium | saturated_fat |
+|------------|---------|---------|----------------|----------|-------|--------|----------------|
+| 1          | 19.75   | 7.25    | 6.00           | 237.12   | 65.00 | 8.00   | 17.00          |
+| 2          | 79.18   | 8.65    | 8.47           | 255.66   | 37.47 | 18.53  | 23.15          |
+| 3          | 82.46   | 9.99    | 9.37           | 332.47   | 31.78 | 22.05  | 29.28          |
+| 4          | 72.23   | 9.34    | 8.95           | 313.39   | 29.87 | 21.27  | 27.38          |
+| 5          | 60.64   | 9.56    | 8.81           | 303.72   | 32.86 | 20.05  | 27.78          |
+
+
 <iframe src="{{ '/assets/mean_by_rating.html' | relative_url }}" width="100%" height="300" frameborder="0"></iframe>
 <iframe src="{{ '/assets/median_by_rating.html' | relative_url }}" width="100%" height="300" frameborder="0"></iframe>
 
-*Significance of Outliers & Next Steps:*  
-You’ll notice **many large outliers** in `minutes`, `calories`, `sugar`, `sodium`, and `saturated_fat`. These extreme values—e.g. recipes claiming thousands of percent daily value—signal entry or scraping errors. To handle them before modeling, we apply transformers like **QuantileTransformer** to compress tails and ensure models aren’t dominated by a few extreme recipes. This outlier-driven decision also guides our feature‐selection: we keep metrics that show reliable variation without excessive noise.
+**Significance:**
+- The mean and median distribution indicate there are **many large outliers** in `minutes`, `calories`, `sugar`, `sodium`, and `saturated_fat`, which suggests that we should probably apply some feature engineering on them if we want to use for prediction.
 
+- Pattern: it seems low-sugar recipes tend to have higher ratings.  The complexity, calories, sodium seem to follow a bell-shaped distribution with ratings. Perhaps people acknowledge the taste of food made from more complex/unhealthy recipes, but slightly lower their ratings due to the complexity/unhealthiness, which results in such a distribution.
 
 ---
