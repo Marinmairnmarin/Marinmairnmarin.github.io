@@ -4,19 +4,15 @@ permalink: /hobbies/index.html
 title: Baseline Model
 ---
 
-# Baseline Model for High-Rating Recipe Prediction
+## Baseline Model for High-Rating Recipe Prediction
 
 ## Model Type
 The baseline model is a **`DecisionTreeClassifier`** from *scikit-learn*.  
 A decision tree offers a fast, easily interpretable starting point for classification.
 
 ## Features Used
-
-- **`minutes`** – *Quantitative*: total cooking time  
-- **`sugar`** – *Quantitative*: grams of sugar (per-serving daily-value %)  
-- **`sodium`** – *Quantitative*: milligrams of sodium (per-serving daily-value %)  
-- **`calories`** – *Quantitative*: calories per serving  
-- **`is_healthy`** – *Nominal*: Boolean flag derived from health-related recipe tags  
+- **4 Quantitative**: `minutes`, `sugar`, `sodium`, `calories`
+- **1 Nominal**: `is_healthy`
 
 
 ## Feature Processing
@@ -34,11 +30,4 @@ A decision tree offers a fast, easily interpretable starting point for classific
 The F1 score balances precision and recall and indicates strong baseline performance given the small feature set.
 
 ## Interpretation
-- An F1 of ~0.84 suggests the tree reliably flags high-rated recipes while limiting false alarms.  
-- **Strengths:** simplicity, interpretability, solid baseline to benchmark future work.  
-- **Limitations / next steps:**  
-  - Engineer richer features (ingredient vectors, detailed nutrition, textual reviews).  
-  - Experiment with ensemble models (Random Forests, Gradient Boosting).  
-  - Further refine outlier handling and class-balance strategies.
-
-This baseline establishes a clear reference point for the upcoming **Final Model** in Step 5.
+From the value of the F1-score, this baseline model can be considered a reasonably good starting point, as it reliably identifies high-rated recipes. However, there is still substantial room for improvement—for instance, we have not yet conducted extensive data preprocessing or optimized the model’s hyperparameters. Thus, the result primarily suggests that the features we selected have predictive value for the rating class.
