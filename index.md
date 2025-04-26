@@ -1,7 +1,7 @@
 ---
 layout: page
 ---
-# High or Low Ratings For a Recipe? Predict with its Complexity & Nutritional Health Information
+# High or Low? Predict Recipes Rating with Complexity & Nutritional Health Information
 
 ## Introduction
 
