@@ -21,21 +21,26 @@ We found nan value in 2 categories:
 |:--|:--|:--|
 | **1. Drop Nan** | rating-related nan rows are dropped (reason discussion above). |
 | **2. Filter to recipes with > 3 ratings** | 'avg_rating' is used as as a summary of each recipe’s overall rating. Averages based on 1-2 votes are too noisy to trust. |
-| **3. Extract nutrition components from `nutrition`** | 'nutrition' column is in the form of a string to mimic a list. We toke the nutition components out and converted to numeric data for health analysis. |
-| **4. Remove implausible nutrition rows** | Values far past 100 %DV are likely scraped/entry errors (e.g., “30 000 % sugar”), so only values ≤ 150 are kept. |
-| **5. Add `is_healthy` flag from `tags`** | We marked `tags` containing *healthy*, *healthy-2*, *high-in-something-diabetic-friendly* true for a new column `is_healthy`, since tags are author-entered meta-data whcih summaize the overall healthiness better than single nutrients. |
+| **3. Extract Interested Columns** | 'avg_rating' represents recipes' overally ratings, 'minutes', 'n_steps',  and 'n_ingredients' represent complexity,'nutrition' and 'tags' bring nutritional health information.
+| **4. Extract nutrition components from `nutrition`** | 'nutrition' column is in the form of a string to mimic a list. We toke the nutition components out and converted to numeric data for health analysis ('nutrition' is dropped after extraction). |
+| **5. Remove implausible nutrition rows** | Values far past 100 %DV are likely scraped/entry errors (e.g., “30 000 % sugar”), so only values ≤ 150 are kept. |
+| **6. Add `is_healthy` flag from `tags`** | We marked `tags` containing *healthy*, *healthy-2*, *high-in-something-diabetic-friendly* true for a new column `is_healthy`, since tags are author-entered meta-data whcih summaize the overall healthiness better than single nutrients ('tags' is dropped after extraction). |
 
 (Note: Although there are tags like low-saturated-fat, they only reflect one aspect of nutrition. Since we cannot guarantee the overall healthiness of the recipe based on such tags alone, we only selected tags that more clearly indicate a healthy recipe as a whole.)
 
+
+After the data cleaning, there are 13878 rows left.
+
 Below is the head of the cleaned modeling table (one row per rated recipe):
 
-| id   | name                      | minutes | n_steps | n_ingredients | reviewer_id | rating | avg_rating | calories | total_fat | sugar | sodium | protein | saturated_fat | carbohydrates |
-|------|---------------------------|--------:|--------:|--------------:|------------:|-------:|-----------:|---------:|----------:|------:|-------:|--------:|-------------:|--------------:|
-| 502  | Deviled Egg-Stuffed Tom…  |      45 |       6 |             7 |       12345 |      5 |        4.2 |      190 |        10 |     5 |      8 |      15 |            3 |            12 |
-| 814  | Quick Black Bean Soup     |      30 |       5 |             8 |       67890 |      4 |        3.8 |      250 |        12 |    10 |     14 |      12 |            5 |            35 |
-| 1290 | One‑Pan Lemon Chicken     |      40 |       7 |            10 |       23456 |      5 |        4.5 |      350 |        15 |     8 |     20 |      18 |            7 |            30 |
-| 2075 | Easy Veggie Stir‑Fry      |      20 |       4 |             9 |       34567 |      3 |        3.1 |      180 |         8 |     6 |     12 |      14 |            2 |            25 |
-| 3321 | Classic Beef Stroganoff   |      50 |       8 |            12 |       45678 |      4 |        4.0 |      420 |        18 |    12 |     22 |      20 |           10 |            40 |
+| id     | avg_rating | minutes | n_steps | n_ingredients | calories | total_fat | sugar | sodium | protein | saturated_fat | carbohydrates | is_healthy |
+|--------|------------|---------|---------|----------------|----------|-----------|-------|--------|---------|---------------|---------------|------------|
+| 275030 | 5.00       | 45      | 11      | 9              | 577.7    | 53.0      | 149.0 | 19.0   | 14.0    | 67.0          | 21.0          | False      |
+| 275061 | 4.78       | 65      | 16      | 11             | 402.5    | 37.0      | 9.0   | 40.0   | 42.0    | 56.0          | 8.0           | False      |
+| 275071 | 4.86       | 90      | 7       | 9              | 166.1    | 10.0      | 6.0   | 0.0    | 7.0     | 4.0           | 7.0           | True       |
+| 275072 | 4.25       | 35      | 8       | 11             | 227.5    | 12.0      | 6.0   | 11.0   | 67.0    | 12.0          | 1.0           | False      |
+| 275094 | 4.90       | 12      | 3       | 5              | 99.5     | 7.0       | 23.0  | 14.0   | 11.0    | 3.0           | 3.0           | True       |
+
 
 ---
 
@@ -47,8 +52,6 @@ Below is the head of the cleaned modeling table (one row per rated recipe):
   height="600"
   frameborder="0">
 </iframe>
-
-
 The histogram above shows that most recipes cluster between **5–15 steps**, with a peak around 8 steps and a long right tail of very complex recipes. This tells us that “number of steps” varies enough to be a potential predictor of rating—simpler recipes might correlate with higher ratings.
 
 
