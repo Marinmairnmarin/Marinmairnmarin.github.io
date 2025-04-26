@@ -27,10 +27,10 @@ By experimenting with different prediction models, adjusting preprocessing metho
 
 | Metric              | Baseline Tree | **Final Logistic** |
 |---------------------|--------------:|-------------------:|
-| **F₁-score**        | 0.836         | **0.915** |
+| **F₁-score**        | 0.836         | **0.917** |
 
 
-**Key change:** the logistic model achieved an F1 score of **0.915**, improving by roughly **8%** compared to the baseline Decision Tree model.
+**Key change:** the logistic model achieved an F1 score of **0.917**, improving by roughly **8%** compared to the baseline Decision Tree model.
 
 
 ### 5 · Why the Extra Features & Transforms Helped  
