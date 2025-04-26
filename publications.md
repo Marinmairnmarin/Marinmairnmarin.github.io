@@ -5,7 +5,9 @@ title: Data Cleaning and Exploratory Data Analysis
 ---
 
 ## Imputation
-We found the nan value in 2 categories:
+No imputation was performed.
+
+We found nan value in 2 categories:
 
 **1. name, description, date, review**: Their absence does not prevent us from obtaining nutritional health information and complexity from other columns, so we decided to keep the data records with these Nan columns.
 
@@ -17,10 +19,11 @@ We found the nan value in 2 categories:
 
 | Step | Why |
 |:--|:--|:--|
-| **1. Filter to recipes with > 3 ratings** | `groupby(id).filter(count>3)` |  'avg_rating' is used as as a summary of each recipe’s overall rating. Averages based on 1-2 votes are too noisy to trust. |
-| **2. Extract nutrition components from `nutrition`** | 'nutrition' column is in the form of a string to mimic a list. We toke the nutition components out and converted to numeric data for health analysis. |
-| **Remove implausible nutrition rows** | Values far past 100 %DV are likely scraped/entry errors (e.g., “30 000 % sugar”), so only values ≤ 150 are kept. |
-| **Add `is_healthy` flag from `tags`** | `tags` containing *healthy*, *healthy-2*, *high-in-something-diabetic-friendly* → `True` | Tags are author-entered meta-data; they summarise overall healthiness better than single nutrients. |
+| **1. Drop Nan** | rating-related nan rows are dropped (reason discussion above). |
+| **2. Filter to recipes with > 3 ratings** | 'avg_rating' is used as as a summary of each recipe’s overall rating. Averages based on 1-2 votes are too noisy to trust. |
+| **3. Extract nutrition components from `nutrition`** | 'nutrition' column is in the form of a string to mimic a list. We toke the nutition components out and converted to numeric data for health analysis. |
+| **4. Remove implausible nutrition rows** | Values far past 100 %DV are likely scraped/entry errors (e.g., “30 000 % sugar”), so only values ≤ 150 are kept. |
+| **5. Add `is_healthy` flag from `tags`** | We marked `tags` containing *healthy*, *healthy-2*, *high-in-something-diabetic-friendly* true for a new column `is_healthy`, since tags are author-entered meta-data whcih summaize the overall healthiness better than single nutrients. |
 
 (Note: Although there are tags like low-saturated-fat, they only reflect one aspect of nutrition. Since we cannot guarantee the overall healthiness of the recipe based on such tags alone, we only selected tags that more clearly indicate a healthy recipe as a whole.)
 
