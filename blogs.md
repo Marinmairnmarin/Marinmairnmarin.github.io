@@ -43,5 +43,5 @@ By experimenting with different prediction models, adjusting preprocessing metho
 
 
 ### 6 · Takeaways  
-- With such high F1 score, we believe complexity and nutritional health information could be used to predict whether a recipe would get high or low overall ratings.
-- In terms of building models, better preprocessing with transformers and regularization that precents over-fitting despite class imbalance improved our model greatly.
+- With such high F1 score, we believe complexity and nutritional health information could effectively predict whether a recipe would get high or low overall ratings.
+- In terms of building models, better preprocessing with transformers and regularization improved our model greatly.
