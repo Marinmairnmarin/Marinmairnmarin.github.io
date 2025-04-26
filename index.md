@@ -1,7 +1,7 @@
 ---
 layout: page
 ---
-# High or Low? Predict Recipes Rating with Complexity & Nutritional Health Information
+## High or Low? Predict Recipes Rating with Complexity & Nutritional Health Information
 
 ## Introduction
 
@@ -16,10 +16,10 @@ Home cooks, nutritionists, and recipe‑platform designers should care because u
 
 ---
 ## Preparing the data
-- **Merging**We left merged the datasets to get all reviews of recipes included in the recipes dataset.**NaN**
+- **Merging** We left merged the datasets to get all reviews of recipes included in the recipes dataset.
 - **Zero-ratings** Change to **NaN**
 In reality, the lowest score a reviewer can actively give is 1. A recorded value of 0 almost always means no rating was actually provided even though the review text was submitted. We therefore convert rating = 0 to NaN before analysis so that missing opinions don’t bias averages.
-- **Averaging Rating** We calculated the average rating per recipe and added it as a new column.**NaN**
+- **Averaging Rating** We calculated the average rating per recipe and added it as a new column.
 
 ## Dataset Size
 - **Number of unique recipes (rows)**: 234429  
