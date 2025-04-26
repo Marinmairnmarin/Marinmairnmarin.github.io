@@ -15,13 +15,14 @@ We found the nan value in 2 categories:
 
 ## 1  Data Cleaning
 
-| Step | What we did | Why |
+| Step | Why |
 |:--|:--|:--|
-| **Filter to recipes with > 3 ratings** | `groupby(id).filter(count>3)` | Averages based on 1-2 votes are too noisy to trust. |
-| **Expand `nutrition` string → seven numeric columns** | `['calories', 'total_fat', …]` | Each element is %DV, needed individually for health analysis. |
-| **Remove implausible nutrition rows** | Keep rows where every %DV ≤ 150 | Values far past 100 %DV are likely scraped/entry errors (e.g., “30 000 % sugar”). |
+| **1. Filter to recipes with > 3 ratings** | `groupby(id).filter(count>3)` |  'avg_rating' is used as as a summary of each recipe’s overall rating. Averages based on 1-2 votes are too noisy to trust. |
+| **2. Extract nutrition components from `nutrition`** | 'nutrition' column is in the form of a string to mimic a list. We toke the nutition components out and converted to numeric data for health analysis. |
+| **Remove implausible nutrition rows** | Values far past 100 %DV are likely scraped/entry errors (e.g., “30 000 % sugar”), so only values ≤ 150 are kept. |
 | **Add `is_healthy` flag from `tags`** | `tags` containing *healthy*, *healthy-2*, *high-in-something-diabetic-friendly* → `True` | Tags are author-entered meta-data; they summarise overall healthiness better than single nutrients. |
 
+(Note: Although there are tags like low-saturated-fat, they only reflect one aspect of nutrition. Since we cannot guarantee the overall healthiness of the recipe based on such tags alone, we only selected tags that more clearly indicate a healthy recipe as a whole.)
 
 Below is the head of the cleaned modeling table (one row per rated recipe):
 
