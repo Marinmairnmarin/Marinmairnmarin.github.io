@@ -54,9 +54,24 @@ Below is the head of the cleaned modeling table (one row per rated recipe):
   frameborder="0">
 </iframe>
 
-**Interpretation**
+Interpretation**
 The histogram above shows that most recipes cluster between **5–15 steps**, with a peak around 8 steps and a long right tail of very complex recipes. This tells us that “number of steps” varies enough to be a potential predictor of rating—simpler recipes might correlate with higher ratings.
 
+### Distribution of Average Ratings
+
+<iframe
+  src="{{ '/assets/avg_rating_hist.html' | relative_url }}"
+  width="100%"
+  height="600"
+  frameborder="0">
+</iframe>
+
+**Interpretation.**  
+The histogram of `avg_rating` is highly **left-skewed**: the vast majority of recipes cluster at the top end of the 1–5 scale. This likely reflects a positivity bias—home cooks are more inclined to leave a review when they’ve had a good experience.  
+
+> **Modeling implication:** Because our target (`high_rating`) is defined on this skewed distribution (only ≈20 % of recipes exceed 4.5 stars), we must address **class imbalance** in our prediction pipeline (e.g., via class weights, resampling, or threshold tuning).
+
+---
 
 ---
 
