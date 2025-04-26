@@ -4,7 +4,7 @@ permalink: /blogs/index.html
 title: Final Model
 ---
 
-## Step 5 · Final Model & Improvements
+## Final Model & Improvements
 
 ### 1 · Feature Representation  
  - unchanged – same quantile → normal transforms
