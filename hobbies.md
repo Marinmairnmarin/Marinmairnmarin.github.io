@@ -25,18 +25,6 @@ A decision tree offers a fast, easily interpretable starting point for classific
   > _Note_: Decision trees split on raw values and do not require one-hot or label encoding. Other models (e.g., Logistic Regression, KNN) do require encoding of categorical inputs.  
 - All preprocessing and model fitting were wrapped in a single `sklearn.Pipeline`.
 
-## Data Cleaning & Filtering
-1. **Merged** raw *recipes* and *ratings* tables; removed rows with missing or zero ratings.  
-2. **Dropped outliers** where any nutrient percentage exceeded 150 % of daily value.  
-3. **Kept only recipes** with **> 3 user ratings** to ensure representative averages.
-
-Resulting dataset: **≈ 13 878 recipes**.
-
-## Prediction Task
-- **Target variable:**  
-  `high_rating` = True if `avg_rating` ≥ 4.5, else False.
-- **Train / test split:** `train_test_split` with a fixed random seed (42).
-
 ## Performance
 
 | Metric (test set) | Value |
