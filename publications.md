@@ -28,6 +28,7 @@ We found nan value in 2 categories:
 
 (Note: Although there are tags like low-saturated-fat, they only reflect one aspect of nutrition. Since we cannot guarantee the overall healthiness of the recipe based on such tags alone, we only selected tags that more clearly indicate a healthy recipe as a whole.)
 
+
 After the data cleaning, there are 13878 rows left.
 
 Below is the head of the cleaned modeling table (one row per rated recipe):
@@ -51,6 +52,7 @@ Below is the head of the cleaned modeling table (one row per rated recipe):
   height="600"
   frameborder="0">
 </iframe>
+
 **Interpretation**
 The histogram above shows that most recipes cluster between **5–15 steps**, with a peak around 8 steps and a long right tail of very complex recipes. This tells us that “number of steps” varies enough to be a potential predictor of rating—simpler recipes might correlate with higher ratings.
 
@@ -79,7 +81,8 @@ The ratings distribution for low-calorie and medium-calorie recipes isrelatively
 
 ### Mean & Median of Key Metrics by Rating Bin
 
-**Mean*
+**Mean**
+
 | rating_bin | minutes | n_steps | n_ingredients | calories | sugar | sodium | saturated_fat |
 |------------|---------|---------|----------------|----------|-------|--------|----------------|
 | 1          | 19.75   | 7.25    | 6.00           | 237.12   | 65.00 | 8.00   | 17.00          |
