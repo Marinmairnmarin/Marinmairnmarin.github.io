@@ -3,6 +3,12 @@ layout: page
 permalink: /publications/index.html
 title: Data Cleaning and Exploratory Data Analysis
 ---
+
+## Imputation
+We found the nan value in 2 categories:
+**1. name, description, date, review**: Their absence does not prevent us from obtaining nutritional health information and complexity from other columns, so we decided to keep the data records with these Nan columns.
+**2. reviewer_id, rating, avg_rating**: reviewer_id and avg_rating will only be Nan when a recipe does not match any reviewer's reviews, and the Nan of rating may come from the absence of reviews or the existence of reviews but the value of the rating itself is not successfully entered. Since exploring how recipes are rated are what we want to do next, we drop them at this stage.
+
 ## Data Cleaning
 
 ## 1  Data Cleaning (*tied to the data-generating process*)
@@ -77,11 +83,3 @@ You’ll notice **many large outliers** in `minutes`, `calories`, `sugar`, `sodi
 
 
 ---
-
-## Imputation
-
-No imputation was performed on our target or predictors.  
-- **Ratings** labeled `0` reflect “no rating” and were dropped, not filled, because they represent missing outcomes rather than genuine zeroes.  
-- Other columns (e.g. `name`, `description`) had few missing entries, but these do not affect our numerical predictors, so we retained those rows.  
-
-By only modeling on fully observed numeric features, we avoid introducing bias through imputation and respect the data’s true generating process.
